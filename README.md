@@ -6,4 +6,8 @@
 <img src="https://github.com/nyafnir/Mira/actions/workflows/codeql-analysis.yml/badge.svg" alt="CodeQL Analysis" />
 <p/>
 
+| Statements                  | Branches                | Functions                 | Lines             |
+| --------------------------- | ----------------------- | ------------------------- | ----------------- |
+| ![Statements](#statements#) | ![Branches](#branches#) | ![Functions](#functions#) | ![Lines](#lines#) |
+
 [Больше информации в справочнике](https://github.com/nyafnir/Mira/wiki)
