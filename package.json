@@ -11,16 +11,16 @@
   "keywords": [
     "discordjs"
   ],
-  "main": "src/index.ts",
+  "main": "dist/src/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "lint-fix": "eslint . --ext .ts --fix",
     "test": "mocha",
     "build": "tsc",
-    "start": "node ./dist/src/index.js",
+    "start": "node .",
     "watch": "npx nodemon --exec ts-node ./src/index.ts",
-    "start-win": "chcp 65001 && node ./dist/src/index.js",
-    "watch-win": "chcp 65001 && npx nodemon --exec ts-node ./src/index.ts"
+    "start-win": "chcp 65001 && npm run start",
+    "watch-win": "chcp 65001 && npm run watch"
   },
   "repository": {
     "type": "git",
@@ -34,8 +34,11 @@
     "@types/chai": "^4.3.0",
     "@types/mocha": "^9.1.0",
     "@types/pino": "^7.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
     "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.4.0",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
     "mocha": "^9.2.0",
     "nodemon": "^2.0.15",
