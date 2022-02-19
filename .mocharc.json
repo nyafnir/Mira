@@ -2,6 +2,6 @@
     "extension": [
         "ts"
     ],
-    "spec": "tests/**/*.spec.ts",
+    "spec": "./src/tests/**/*.spec.ts",
     "require": "ts-node/register"
 }
