@@ -1,0 +1,8 @@
+{
+    "search.exclude": {
+        "**/node_modules": true
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.bracketPairColorization.enabled": true,
+    "files.eol": "\n",
+}
