@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+    mysql:
+        image: mysql:latest
+        restart: always
+        env_file:
+            - .env
+        ports:
+            - ${DB_PORT}:${DB_PORT}
+        environment:
+            MYSQL_DATABASE: mira
+            MYSQL_USER: ${DB_USER}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ALLOW_EMPTY_PASSWORD: true
+            MYSQL_ROOT_HOST: '%'
+            DB_DATA: /var/lib/mysql
+        volumes:
+            - ./db_data:/var/lib/mysql
+            - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf

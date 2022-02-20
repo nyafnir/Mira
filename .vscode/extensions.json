@@ -1,6 +1,10 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker",
+    "formulahendry.docker-explorer",
+    "vscode-icons-team.vscode-icons",
+    "mikestead.dotenv"
   ]
 }
