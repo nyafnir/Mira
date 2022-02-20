@@ -121,7 +121,7 @@ export const config = {
                 timeout: 15000,
             },
             list: {
-                size: 5,
+                size: 10,
                 timeout: 15000,
             },
             cooldown: {
