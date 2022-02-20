@@ -209,7 +209,9 @@ module.exports = {
                 permission,
             });
 
-            embed.setDescription(emojiCharacters.yes);
+            embed.setDescription(
+                `К команде /${commandName} сущности ${userOrRole} доступ запрещен`,
+            );
         }
 
         if (subcommand === 'remove' && commandName) {
@@ -274,7 +276,9 @@ module.exports = {
 
             cooldowns.set(interaction.user.id, interaction.guildId, this.name);
 
-            embed.setDescription(`Удалено! (${values.length})`);
+            embed.setDescription(
+                `Выбранные для удаления настройки доступа больше не действительны (${values.length})`,
+            );
         }
 
         return await interaction.editReply({
