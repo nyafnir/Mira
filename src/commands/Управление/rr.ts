@@ -120,6 +120,10 @@ module.exports = {
                 interaction.guildId,
             );
 
+            if (!rrOfGuild.length) {
+                throw new Error('не найдены роли по реакции.');
+            }
+
             embed.setTitle('Список отслеживаемых сообщений');
 
             cooldowns.set(
@@ -161,6 +165,10 @@ module.exports = {
                 messageId,
             );
 
+            if (!rrOfMessage.length) {
+                throw new Error('у сообщения нет ролей по реакции.');
+            }
+
             embed
                 .setTitle('Список RR у сообщения')
                 .setURL(
@@ -172,9 +180,7 @@ module.exports = {
                         .join('\n') || 'Нет',
                 )
                 .setFooter({
-                    text: `${
-                        emojiCharacters.id
-                    } ${messageId} в ${channel.toString()}`,
+                    text: `${emojiCharacters.id} ${messageId} в ${channel.name}`,
                 });
         }
 
