@@ -216,12 +216,12 @@ export const messageEmbedWithPages = async (
         embed
             .setDescription(pages[pageNumber].join('\n') || 'Пусто')
             .setFooter({
-                text: `Страница: ${pageNumber}/${pages.length} ${
+                text: `Страница: ${pageNumber + 1}/${pages.length} ${
                     pages.length <= 1
                         ? ''
                         : `| У тебя ${
                               config.settings.default.list.timeout / 1000
-                          } секунд`
+                          } секунд на перелистывание`
                 }`,
             });
         return (await interaction.editReply({
