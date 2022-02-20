@@ -162,7 +162,7 @@ export class Permission
                 const guild = await getDiscordGuild(guildId);
                 if (!guild) {
                     throw new Error(
-                        `гильдия ID: ${guildId} недоступна, удаление настройки отменено.`,
+                        `гильдия ID: ${guildId} недоступна, удаление настройки невозможно.`,
                     );
                 }
 

@@ -120,7 +120,7 @@ module.exports = {
                 );
             }
 
-            embed.setTitle('Список команд (количество настроек)');
+            embed.setTitle('Команда (количество настроек)');
 
             cooldowns.set(
                 interaction.user.id,
@@ -147,7 +147,7 @@ module.exports = {
 
             if (!permissions.length) {
                 throw new Error(
-                    `у команды ${command.name} нет настроек доступа.`,
+                    `у команды \`/${commandName}\` нет настроек для отображения.`,
                 );
             }
 
@@ -210,7 +210,9 @@ module.exports = {
             });
 
             embed.setDescription(
-                `К команде /${commandName} сущности ${userOrRole} доступ запрещен`,
+                `К команде \`/${commandName}\` сущности ${userOrRole} доступ ${
+                    permission ? 'разрешён' : 'запрещён'
+                }`,
             );
         }
 
@@ -221,8 +223,10 @@ module.exports = {
                 await command.getPermissionsFor(interaction.guildId)
             ).slice(0, config.discord.menu.choice.max);
 
-            if (permissions.length === 0) {
-                throw new Error(`в команде \`/${commandName}\` нет настроек.`);
+            if (!permissions.length) {
+                throw new Error(
+                    `у команды \`/${commandName}\` нет настроек для удаления.`,
+                );
             }
 
             const options = [];
@@ -277,7 +281,7 @@ module.exports = {
             cooldowns.set(interaction.user.id, interaction.guildId, this.name);
 
             embed.setDescription(
-                `Выбранные для удаления настройки доступа больше не действительны (${values.length})`,
+                `Выбранные настройки доступа успешно удалены (${values.length})`,
             );
         }
 
