@@ -17,6 +17,19 @@ interface IPermissionAttributes {
     permission: boolean; // Разрешено или запрещено
 }
 
+interface IBulkDestroyOptions {
+    where: {
+        id: string[];
+    };
+    hooks: boolean;
+    individualHooks: boolean;
+    force: boolean;
+    cascade: boolean;
+    restartIdentity: boolean;
+    type: 'BULKDELETE';
+    model: Permission;
+}
+
 export class Permission
     extends Model<IPermissionAttributes>
     implements IPermissionAttributes
@@ -132,45 +145,51 @@ export class Permission
             });
         });
 
-        Permission.beforeBulkDestroy(async (options) => {
-            console.log(options); // TODO: black box
-            /*const instances: Permission[] = [];
-            for (const _id of id) {
-                const instance = await Permission.findByPk(_id);
-                if (!!instance) {
-                    instances.push(instance);
-                }
-            }
-    
-            // IMPORTANT: 0 - в боте нет случая удаления прав для разных гильдий одновременно
-            const guildId = instances[0].guild_id;
-            const guild = await getDiscordGuild(guildId);
-            if (!guild) {
-                throw new Error(
-                    `Гильдия ID: ${instance.guild_id} недоступна, удаление разрешения отменено.`,
-                );
-            }
-    
-            const groupByCommandId = groupBy(instances, 'command_id');
-    
-            for (const group of groupByCommandId) {
-                const users = [];
-                const roles = [];
-                for (const data of group.values) {
-                    if (data.type === 'USER') {
-                        users.push(data.discord_id);
-                    } else if (data.type === 'ROLE') {
-                        roles.push(data.discord_id);
+        Permission.beforeBulkDestroy(
+            async (options: Partial<IBulkDestroyOptions>) => {
+                const ids = options.where?.id || [];
+
+                const instances: Permission[] = [];
+                for (const _id of ids) {
+                    const instance = await Permission.findByPk(_id);
+                    if (instance) {
+                        instances.push(instance);
                     }
                 }
-    
-                await guild!.commands.permissions.remove({
-                    command: group.key,
-                    users,
-                    roles,
-                });
-            }*/
-        });
+
+                // 0 - в боте нет случая удаления прав для разных гильдий одновременно
+                const guildId = instances[0].guild_id;
+                const guild = await getDiscordGuild(guildId);
+                if (!guild) {
+                    throw new Error(
+                        `гильдия ID: ${guildId} недоступна, удаление настройки отменено.`,
+                    );
+                }
+
+                const groupByCommandId = groupObjectsByKey(
+                    instances,
+                    'command_id',
+                );
+
+                for (const group of groupByCommandId) {
+                    const users = [];
+                    const roles = [];
+                    for (const data of group.values) {
+                        if (data.type === 'USER') {
+                            users.push(data.discord_id);
+                        } else if (data.type === 'ROLE') {
+                            roles.push(data.discord_id);
+                        }
+                    }
+
+                    await guild.commands.permissions.remove({
+                        command: group.key,
+                        users,
+                        roles,
+                    });
+                }
+            },
+        );
     };
 
     //#endregion
