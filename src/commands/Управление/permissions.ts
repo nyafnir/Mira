@@ -1,4 +1,5 @@
 import {
+    Client,
     CommandInteraction,
     Message,
     MessageActionRow,
@@ -77,7 +78,7 @@ module.exports = {
     ],
     defaultPermission: true,
     group: __dirname.split(/[\\/]/)[__dirname.split(/[\\/]/).length - 1],
-    async execute(interaction: CommandInteraction) {
+    async execute(client: Client, interaction: CommandInteraction) {
         if (!interaction.guild || !interaction.guildId) {
             throw new Error('Не определен параметр guild/guildId');
         }

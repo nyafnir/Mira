@@ -1,4 +1,4 @@
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { Client, CommandInteraction, MessageEmbed } from 'discord.js';
 import { BotCommand, ArgType, listCommands } from '@services/commander';
 import { secondsFormattedHMS, toTitle } from '@utils';
 import { config } from '@config';
@@ -19,7 +19,7 @@ module.exports = {
         },
     ],
     group: __dirname.split(/[\\/]/)[__dirname.split(/[\\/]/).length - 1],
-    async execute(interaction: CommandInteraction) {
+    async execute(client: Client, interaction: CommandInteraction) {
         if (!Object.keys(spells).length) {
             listCommands.map((command) => {
                 if (command.permissions !== undefined) {

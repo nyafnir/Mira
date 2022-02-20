@@ -5,6 +5,7 @@ import {
     MessageEmbed,
     MessageSelectMenu,
     GuildTextBasedChannel,
+    Client,
 } from 'discord.js';
 import { ArgType } from '@services/commander';
 import { models } from '@services/database';
@@ -93,7 +94,7 @@ module.exports = {
     ],
     defaultPermission: false,
     group: __dirname.split(/[\\/]/)[__dirname.split(/[\\/]/).length - 1],
-    async execute(interaction: CommandInteraction) {
+    async execute(client: Client, interaction: CommandInteraction) {
         if (!interaction.guildId) {
             throw new Error('Не определен параметр guildId');
         }
