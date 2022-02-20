@@ -138,12 +138,18 @@ module.exports = {
             );
         }
 
-        if (subcommand === 'list' && !!commandName) {
+        if (subcommand === 'list' && commandName) {
             const command = await models.Command.getOne(commandName, true);
 
             const permissions = await command.getPermissionsFor(
                 interaction.guildId,
             );
+
+            if (!permissions.length) {
+                throw new Error(
+                    `у команды ${command.name} нет настроек доступа.`,
+                );
+            }
 
             embed.setTitle(`/${commandName}`).setFooter({
                 text: 'Важно: разрешения пользователей приоритетней, чем ролей!',

@@ -192,8 +192,14 @@ export const awaitChangedButtonsByUser = async (
 export const messageEmbedWithPages = async (
     interaction: CommandInteraction,
     embed: MessageEmbed,
-    data: string[],
+    data: string[] = [],
 ): Promise<void> => {
+    if (!data.length) {
+        throw new Error(
+            'передан пустой массив данных для отображения в виде страниц.',
+        );
+    }
+
     const topSize =
         config.settings.default.list.size > data.length
             ? data.length
