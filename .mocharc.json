@@ -2,7 +2,7 @@
     "extension": [
         "ts"
     ],
-    "spec": "./src/tests/**/*.spec.ts",
+    "spec": "./src/tests/**/*.spec.*",
     "require": [
         "ts-node/register",
         "tsconfig-paths/register"
