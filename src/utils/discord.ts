@@ -209,15 +209,15 @@ export const messageEmbedWithPages = async (
     const update = async () => {
         embed
             .setDescription(pages[pageNumber].join('\n') || 'Пусто')
-            .setFooter(
-                `Страница: ${pageNumber}/${pages.length} ${
+            .setFooter({
+                text: `Страница: ${pageNumber}/${pages.length} ${
                     pages.length <= 1
                         ? ''
                         : `| У тебя ${
                               config.settings.default.list.timeout / 1000
                           } секунд`
                 }`,
-            );
+            });
         return (await interaction.editReply({
             embeds: [embed],
             components: [],
