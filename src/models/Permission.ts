@@ -48,8 +48,8 @@ export class Permission
     //#region Отметки времени
 
     readonly created_at!: Date;
-    readonly updated_at!: Date;
-    readonly deleted_at!: Date;
+    readonly updated_at!: Date | null;
+    readonly deleted_at!: Date | null;
 
     //#endregion
 
