@@ -237,7 +237,7 @@ module.exports = {
                     .addOptions(options),
             );
 
-            embed.setTitle('Что удалить?');
+            embed.setTitle('Что удалить?').setDescription(`🆔 ${messageId}`);
 
             await interaction.editReply({
                 embeds: [embed],
@@ -260,7 +260,9 @@ module.exports = {
 
             await models.RoleReaction.destroy({ where: { id: values } });
 
-            embed.setDescription(`Удалено: ${values.join(', ')}`);
+            embed
+                .setTitle(`🆔 ${messageId}`)
+                .setDescription(`Удалено реакций: ${values.join(', ')}`);
         }
 
         return await interaction.editReply({

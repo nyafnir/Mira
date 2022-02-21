@@ -255,7 +255,7 @@ module.exports = {
                     .addOptions(options),
             );
 
-            embed.setTitle('Что удалить?');
+            embed.setTitle('Что удалить?').setDescription(`/${commandName}`);
 
             await interaction.editReply({
                 embeds: [embed],
@@ -280,9 +280,11 @@ module.exports = {
 
             cooldowns.set(interaction.user.id, interaction.guildId, this.name);
 
-            embed.setDescription(
-                `Выбранные настройки доступа успешно удалены (${values.length})`,
-            );
+            embed
+                .setTitle(`/${commandName}`)
+                .setDescription(
+                    `Выбранные настройки доступа успешно удалены (${values.length})`,
+                );
         }
 
         return await interaction.editReply({
