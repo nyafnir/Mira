@@ -9,11 +9,11 @@ const dotenvParsed = dotenv().parsed || {};
 export const config = {
     bot: {
         name: pj.name,
-        version: pj.version,
+        version: `v${pj.version}`,
         dependencies: {
             nodejs: process.version,
-            discordjs: pj.dependencies['discord.js'],
-        },
+            discordjs: pj.dependencies['discord.js'].replace('^', 'v'),
+        }, // Формат: v0.0.0
         bugs: pj.bugs,
         token: dotenvParsed.BOT_TOKEN,
         author: {
