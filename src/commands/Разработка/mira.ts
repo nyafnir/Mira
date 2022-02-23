@@ -14,11 +14,6 @@ module.exports = {
             type: ArgType.SUB_COMMAND,
         },
         {
-            name: 'invite',
-            description: 'Пригласить к себе',
-            type: ArgType.SUB_COMMAND,
-        },
-        {
             name: 'donate',
             description: 'Благодарность за хорошего бота',
             type: ArgType.SUB_COMMAND,
@@ -41,33 +36,16 @@ module.exports = {
                 .setThumbnail(
                     interaction.client.user?.avatarURL({ dynamic: true }) || '',
                 )
-                .setDescription(
-                    `[Сообщить о проблеме / получить помощь](${config.bot.bugs.url})`,
-                )
+
                 .addFields([
                     {
-                        name: '💫',
-                        value: '💫',
+                        name: 'Окружение',
+                        value: `NodeJS: \`${config.bot.dependencies.nodejs}\`\nDiscordJS: \`${config.bot.dependencies.discordjs}\``,
                         inline: true,
                     },
                     {
-                        name: 'Время работы',
-                        value: timeFomattedDHMS(client.uptime || 0),
-                        inline: true,
-                    },
-                    {
-                        name: 'Версия',
-                        value: `[${config.bot.version}](https://github.com/${config.bot.author.nickname}/${config.bot.name})`,
-                        inline: true,
-                    },
-                    {
-                        name: 'Сервера',
-                        value: client.guilds.cache.size.toString(),
-                        inline: true,
-                    },
-                    {
-                        name: 'Занято ОЗУ',
-                        value:
+                        name: 'Ресурсы',
+                        value: `ОЗУ: \`${
                             roundDecimalPlaces(
                                 process.memoryUsage().heapUsed / 8e6,
                                 0,
@@ -77,15 +55,30 @@ module.exports = {
                                 process.memoryUsage().rss / 8e6,
                                 0,
                             ) +
-                            ' МБ',
+                            ' МБ'
+                        }\`\nЦП: \`${config.bot.dependencies.discordjs}\``,
                         inline: true,
                     },
                     {
-                        name: 'Автор',
-                        value: config.bot.author.nickname,
-                        inline: true,
+                        name: 'Статистика',
+                        value: `Сервера: **${client.guilds.cache.size.toString()}** Версия: [v${
+                            config.bot.version
+                        }](https://github.com/${config.bot.author.nickname}/${
+                            config.bot.name
+                        })`,
+                        inline: false,
                     },
-                ]);
+                    {
+                        name: 'Полезные ссылки',
+                        value: `[Сообщить о проблеме / получить помощь](${config.bot.bugs.url})`,
+                        inline: false,
+                    },
+                ])
+                .setFooter({
+                    text: `Время работы: ${timeFomattedDHMS(
+                        client.uptime || 0,
+                    )}`,
+                });
         }
 
         if (subcommand === 'invite') {

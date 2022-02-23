@@ -10,6 +10,10 @@ export const config = {
     bot: {
         name: pj.name,
         version: pj.version,
+        dependencies: {
+            nodejs: process.version,
+            discordjs: pj.dependencies['discord.js'],
+        },
         bugs: pj.bugs,
         token: dotenvParsed.BOT_TOKEN,
         permissions: '2416135232', // https://discord.com/developers/applications/394457633555349504/bot
