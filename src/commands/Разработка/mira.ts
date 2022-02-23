@@ -1,7 +1,8 @@
 import { Client, CommandInteraction, MessageEmbed } from 'discord.js';
-import { timeFomattedDHMS, roundDecimalPlaces } from '@utils';
+import { convertMsToDHMS, roundDecimalPlaces } from '@utils';
 import { config } from '@config';
 import { ArgType } from '@services/commander';
+import { cpuUsage } from 'os-utils';
 
 module.exports = {
     name: __filename.slice(__dirname.length + 1).split('.')[0],
@@ -30,6 +31,11 @@ module.exports = {
         if (subcommand === 'info') {
             isEphemeral = false;
 
+            const cpu: number =
+                (await new Promise((resolve) =>
+                    cpuUsage((percentage) => resolve(percentage)),
+                )) || -1;
+
             embed
                 .setColor(config.settings.commands.info.status.color)
                 .setTitle('Информация обо мне')
@@ -55,7 +61,7 @@ module.exports = {
                                 0,
                             ) +
                             ' МБ'
-                        }\`\nЦП: \`--%\``,
+                        }\`\nЦП: \`${cpu.toFixed(2)}%\``,
                         inline: true,
                     },
                     {
