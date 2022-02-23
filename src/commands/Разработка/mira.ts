@@ -6,7 +6,7 @@ import { ArgType } from '@services/commander';
 module.exports = {
     name: __filename.slice(__dirname.length + 1).split('.')[0],
     description: `О боте`,
-    usage: '[info / invite / donate]',
+    usage: '[info / donate]',
     options: [
         {
             name: 'info',
@@ -79,23 +79,6 @@ module.exports = {
                         client.uptime || 0,
                     )}`,
                 });
-        }
-
-        if (subcommand === 'invite') {
-            if (!client.user) {
-                throw new Error('Не определен client.user');
-            }
-
-            embed
-                .setColor(config.settings.commands.info.invite.color)
-                .setAuthor({ name: 'Приглашаешь к себе?' })
-                .setTitle('Да!')
-                .setURL(
-                    `https://discordapp.com/oauth2/authorize?client_id=${client.user.id}&scope=bot&permissions=${config.bot.permissions}`,
-                )
-                .setImage(
-                    'https://media1.tenor.com/images/023828c4b5291432eecabdee129a1c89/tenor.gif',
-                );
         }
 
         if (subcommand === 'donate') {

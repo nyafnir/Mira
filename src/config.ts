@@ -16,7 +16,6 @@ export const config = {
         },
         bugs: pj.bugs,
         token: dotenvParsed.BOT_TOKEN,
-        permissions: '2416135232', // https://discord.com/developers/applications/394457633555349504/bot
         author: {
             nickname: pj.author,
             discord: {
@@ -144,9 +143,6 @@ export const config = {
             info: {
                 status: {
                     color: '#2CB0DE' as ColorResolvable,
-                },
-                invite: {
-                    color: '#552F40' as ColorResolvable,
                 },
             },
             help: {
