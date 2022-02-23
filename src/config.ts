@@ -12,7 +12,7 @@ export const config = {
         version: pj.version,
         bugs: pj.bugs,
         token: dotenvParsed.BOT_TOKEN,
-        permissions: '260784516311', // Права определены функционалом
+        permissions: '2416135232', // https://discord.com/developers/applications/394457633555349504/bot
         author: {
             nickname: pj.author,
             discord: {
@@ -65,7 +65,7 @@ export const config = {
         host: dotenvParsed.DB_HOST,
         port: +dotenvParsed.DB_PORT,
         options: {
-            ssl: true,
+            ssl: false,
             pool: {
                 max: 10,
                 min: 0,
