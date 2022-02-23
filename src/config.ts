@@ -16,6 +16,7 @@ export const config = {
         }, // Формат: v0.0.0
         bugs: pj.bugs,
         changelog: pj.changelog,
+        homepage: pj.homepage,
         token: dotenvParsed.BOT_TOKEN,
         author: {
             nickname: pj.author,

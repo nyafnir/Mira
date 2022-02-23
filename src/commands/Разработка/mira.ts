@@ -89,9 +89,7 @@ module.exports = {
                         name: 'Статистика',
                         value: `Сервера: **${client.guilds.cache.size.toString()}** Версия: [v${
                             config.bot.version
-                        }](https://github.com/${config.bot.author.nickname}/${
-                            config.bot.name
-                        })`,
+                        }](${config.bot.homepage})`,
                         inline: false,
                     },
                     {
