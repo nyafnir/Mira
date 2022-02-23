@@ -15,6 +15,7 @@ export const config = {
             discordjs: pj.dependencies['discord.js'].replace('^', 'v'),
         }, // Формат: v0.0.0
         bugs: pj.bugs,
+        changelog: pj.changelog,
         token: dotenvParsed.BOT_TOKEN,
         author: {
             nickname: pj.author,

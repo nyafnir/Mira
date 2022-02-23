@@ -95,8 +95,10 @@ module.exports = {
                         inline: false,
                     },
                     {
-                        name: 'Полезные ссылки',
-                        value: `[Сообщить о проблеме / получить помощь](${config.bot.bugs.url})`,
+                        name: 'Ссылки',
+                        value:
+                            `[Сообщить о проблеме / получить помощь](${config.bot.bugs.url})\n` +
+                            `[Список изменений](${config.bot.changelog.url})`,
                         inline: false,
                     },
                 ])
