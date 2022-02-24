@@ -2,10 +2,9 @@ export { emojiCharacters } from './emojiCharacters';
 export {
     chance,
     getAllFiles,
-    secondsFormattedHMS,
     groupObjectsByKey,
     toTitle,
-    timeFomattedDHMS,
+    convertMsToDHMS,
     roundDecimalPlaces,
 } from './helpers';
 export {

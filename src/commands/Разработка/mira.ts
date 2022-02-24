@@ -80,9 +80,9 @@ module.exports = {
                     },
                 ])
                 .setFooter({
-                    text: `Время работы: ${timeFomattedDHMS(
+                    text: `Время работы: ${convertMsToDHMS(
                         client.uptime || 0,
-                    )}`,
+                    ).toString()}`,
                 });
         }
 

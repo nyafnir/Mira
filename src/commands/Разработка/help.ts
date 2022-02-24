@@ -1,6 +1,6 @@
 import { Client, CommandInteraction, MessageEmbed } from 'discord.js';
 import { BotCommand, ArgType, listCommands } from '@services/commander';
-import { secondsFormattedHMS, toTitle } from '@utils';
+import { convertMsToDHMS, toTitle } from '@utils';
 import { config } from '@config';
 
 // Команды по группам
@@ -112,10 +112,10 @@ module.exports = {
 
             embed.addField(
                 '**Откат**',
-                secondsFormattedHMS(
+                convertMsToDHMS(
                     spell.cooldown?.seconds ||
                         config.settings.default.cooldown.seconds,
-                ),
+                ).toString(),
                 true,
             );
         }
