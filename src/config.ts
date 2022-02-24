@@ -139,12 +139,14 @@ export const config = {
             },
         },
         commands: {
-            donate: {
-                color: '#4CD137' as ColorResolvable,
-            },
-            info: {
-                status: {
+            mira: {
+                info: {
                     color: '#2CB0DE' as ColorResolvable,
+                },
+                donate: {
+                    color: '#4CD137' as ColorResolvable,
+                    image: 'http://img.nga.178.com/attachments/mon_201911/01/-64xyuQ5-a59uXsZ7pT3cShs-a0.gif',
+                    footer: '«Возможности не приходят сами — вы создаете их» © Крис Гроссер',
                 },
             },
             help: {
