@@ -3,7 +3,7 @@ import { cooldowns } from '@services/cooldowner';
 import { log } from '@services/logger';
 import { Client, Collection, CommandInteraction } from 'discord.js';
 import { BotCommand } from './types';
-import { chance, secondsFormattedHMS } from '@utils';
+import { chance, convertMsToDHMS } from '@utils';
 
 const sendReply = async (interaction: CommandInteraction, message: string) => {
     message = `<@${interaction.user.id}>, ошибка: ${message}`;
@@ -64,7 +64,7 @@ export const onInteraction = async (
             interaction,
             messages[
                 chance.integer({ min: 0, max: messages.length - 1 })
-            ].replace('timeLeft', secondsFormattedHMS(timeLeft)),
+            ].replace('timeLeft', convertMsToDHMS(timeLeft).toString()),
         );
         return;
     }

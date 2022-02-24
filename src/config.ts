@@ -9,10 +9,15 @@ const dotenvParsed = dotenv().parsed || {};
 export const config = {
     bot: {
         name: pj.name,
-        version: pj.version,
+        version: `v${pj.version}`,
+        dependencies: {
+            nodejs: process.version,
+            discordjs: pj.dependencies['discord.js'].replace('^', 'v'),
+        }, // Формат: v0.0.0
         bugs: pj.bugs,
+        changelog: pj.changelog,
+        homepage: pj.homepage,
         token: dotenvParsed.BOT_TOKEN,
-        permissions: '2416135232', // https://discord.com/developers/applications/394457633555349504/bot
         author: {
             nickname: pj.author,
             discord: {
@@ -134,15 +139,14 @@ export const config = {
             },
         },
         commands: {
-            donate: {
-                color: '#4CD137' as ColorResolvable,
-            },
-            info: {
-                status: {
+            mira: {
+                info: {
                     color: '#2CB0DE' as ColorResolvable,
                 },
-                invite: {
-                    color: '#552F40' as ColorResolvable,
+                donate: {
+                    color: '#4CD137' as ColorResolvable,
+                    image: 'http://img.nga.178.com/attachments/mon_201911/01/-64xyuQ5-a59uXsZ7pT3cShs-a0.gif',
+                    footer: '«Возможности не приходят сами — вы создаете их» © Крис Гроссер',
                 },
             },
             help: {

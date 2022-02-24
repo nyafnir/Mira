@@ -1,65 +1,64 @@
 import { expect } from 'chai';
 import {
-    timeFomattedDHMS,
-    secondsFormattedHMS,
+    convertMsToDHMS,
     roundDecimalPlaces,
     toTitle,
     groupObjectsByKey,
 } from '@utils';
 
 describe(__filename.slice(__dirname.length + 1).split('.')[0], () => {
-    it('Приведение миллисекунд к виду D д H ч M м S с', () => {
+    describe('Преобразователь времени', () => {
         const second = 1000;
         const minute = 1000 * 60;
         const hour = 1000 * 60 * 60;
         const day = 1000 * 60 * 60 * 24;
 
-        expect(timeFomattedDHMS(0)).equal('0 д 0 ч 0 м 0 с'); // 0000
-        expect(timeFomattedDHMS(second)).equal('0 д 0 ч 0 м 1 с'); // 0001
-        expect(timeFomattedDHMS(minute)).equal('0 д 0 ч 1 м 0 с'); // 0010
-        expect(timeFomattedDHMS(second + minute)).equal('0 д 0 ч 1 м 1 с'); // 0011
+        it('Должно вернуть миллисекунды в формате: D д? H ч? M мин? S сек? | меньше секунды', () => {
+            expect(convertMsToDHMS(0).toString()).equal('меньше секунды'); // 0000
+            expect(convertMsToDHMS(second).toString()).equal('1 сек'); // 0001
+            expect(convertMsToDHMS(minute).toString()).equal('1 мин'); // 0010
+            expect(convertMsToDHMS(second + minute).toString()).equal(
+                '1 мин 1 сек',
+            ); // 0011
 
-        expect(timeFomattedDHMS(hour)).equal('0 д 1 ч 0 м 0 с'); // 0100
-        expect(timeFomattedDHMS(hour + second)).equal('0 д 1 ч 0 м 1 с'); // 0101
-        expect(timeFomattedDHMS(hour + minute)).equal('0 д 1 ч 1 м 0 с'); // 0110
-        expect(timeFomattedDHMS(hour + minute + second)).equal(
-            '0 д 1 ч 1 м 1 с',
-        ); // 0111
+            expect(convertMsToDHMS(hour).toString()).equal('1 ч'); // 0100
+            expect(convertMsToDHMS(hour + second).toString()).equal(
+                '1 ч 1 сек',
+            ); // 0101
+            expect(convertMsToDHMS(hour + minute).toString()).equal(
+                '1 ч 1 мин',
+            ); // 0110
+            expect(convertMsToDHMS(hour + minute + second).toString()).equal(
+                '1 ч 1 мин 1 сек',
+            ); // 0111
 
-        expect(timeFomattedDHMS(day)).equal('1 д 0 ч 0 м 0 с'); // 1000
-        expect(timeFomattedDHMS(day + second)).equal('1 д 0 ч 0 м 1 с'); // 1001
-        expect(timeFomattedDHMS(day + minute)).equal('1 д 0 ч 1 м 0 с'); // 1010
-        expect(timeFomattedDHMS(day + minute + second)).equal(
-            '1 д 0 ч 1 м 1 с',
-        ); // 1011
+            expect(convertMsToDHMS(day).toString()).equal('1 д'); // 1000
+            expect(convertMsToDHMS(day + second).toString()).equal('1 д 1 сек'); // 1001
+            expect(convertMsToDHMS(day + minute).toString()).equal('1 д 1 мин'); // 1010
+            expect(convertMsToDHMS(day + minute + second).toString()).equal(
+                '1 д 1 мин 1 сек',
+            ); // 1011
 
-        expect(timeFomattedDHMS(day + hour)).equal('1 д 1 ч 0 м 0 с'); // 1100
-        expect(timeFomattedDHMS(day + hour + second)).equal('1 д 1 ч 0 м 1 с'); // 1101
-        expect(timeFomattedDHMS(day + hour + minute)).equal('1 д 1 ч 1 м 0 с'); // 1110
-        expect(timeFomattedDHMS(day + hour + minute + second)).equal(
-            '1 д 1 ч 1 м 1 с',
-        ); // 1111
+            expect(convertMsToDHMS(day + hour).toString()).equal('1 д 1 ч'); // 1100
+            expect(convertMsToDHMS(day + hour + second).toString()).equal(
+                '1 д 1 ч 1 сек',
+            ); // 1101
+            expect(convertMsToDHMS(day + hour + minute).toString()).equal(
+                '1 д 1 ч 1 мин',
+            ); // 1110
+            expect(
+                convertMsToDHMS(day + hour + minute + second).toString(),
+            ).equal('1 д 1 ч 1 мин 1 сек'); // 1111
 
-        expect(() => timeFomattedDHMS(-1)).to.throw(); // Отрицательные значения запрещены
+            expect(() => convertMsToDHMS(-1)).to.throw(); // Отрицательные значения запрещены
 
-        expect(timeFomattedDHMS(499)).equal('0 д 0 ч 0 м 0 с');
-        expect(timeFomattedDHMS(999.1)).equal('0 д 0 ч 0 м 1 с');
-        expect(timeFomattedDHMS(999.6)).equal('0 д 0 ч 0 м 1 с');
-    });
+            expect(convertMsToDHMS(499).toString()).equal('меньше секунды');
+            expect(convertMsToDHMS(999.1).toString()).equal('меньше секунды');
+            expect(convertMsToDHMS(999.6).toString()).equal('меньше секунды');
 
-    it('Приведение секунд к виду: H ч M мин | M мин S сек | что-то одно', () => {
-        const minute = 60;
-        const hour = 60 * 60;
-
-        expect(secondsFormattedHMS(0)).equal('0 сек');
-
-        expect(secondsFormattedHMS(minute)).equal('1 мин');
-        expect(secondsFormattedHMS(hour + minute)).equal('1 ч 1 мин');
-        expect(secondsFormattedHMS(minute + 1)).equal('1 мин 1 сек');
-        expect(secondsFormattedHMS(hour + minute)).equal('1 ч 1 мин');
-        expect(secondsFormattedHMS(hour)).equal('1 ч');
-
-        expect(() => secondsFormattedHMS(-1)).to.throw();
+            expect(convertMsToDHMS(1499).toString()).equal('1 сек');
+            expect(convertMsToDHMS(1500).toString()).equal('2 сек');
+        });
     });
 
     it('Обрезать до N десятичных знаков', () => {

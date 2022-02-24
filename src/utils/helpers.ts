@@ -1,6 +1,7 @@
 import { Chance } from 'chance';
 import { readdirSync, statSync } from 'fs';
 import { join } from 'path';
+import errors from './errors';
 
 // Случайные данные
 export const chance = new Chance();
@@ -23,36 +24,16 @@ export const getAllFiles = function (
     return arrayOfFiles;
 };
 
-//#region Дата и время
+//#region Преобразователи времени
 
-// Приведение секунд к простому виду
-export const secondsFormattedHMS = (seconds: number): string => {
-    if (seconds < 0) {
-        throw new Error('Секунды должны быть положительным числом.');
-    }
-
-    if (seconds >= 3600) {
-        const hours = Math.trunc(seconds / 3600);
-        const minutes = Math.trunc((seconds - hours * 3600) / 60);
-        if (minutes) {
-            return `${hours} ч ${minutes} мин`;
-        }
-        return `${hours} ч`;
-    }
-    if (seconds >= 60) {
-        const minutes = Math.trunc(seconds / 60);
-        const trueSeconds = Math.trunc(seconds - minutes * 60);
-        if (trueSeconds) {
-            return `${minutes} мин ${trueSeconds} сек`;
-        }
-        return `${minutes} мин`;
-    }
-    return `${seconds} сек`;
-};
-
-export const timeFomattedDHMS = (ms: number): string => {
+/**
+ * Преобразование миллисекунд
+ * @param {number} ms Время в миллисекундах от 0
+ * @return {Object} { days, hours, minutes, seconds, toString() }
+ */
+export const convertMsToDHMS = (ms: number) => {
     if (ms < 0) {
-        throw new Error('Миллисекунды должны быть положительным числом.');
+        throw new Error(errors.DATATIME_INVALID.description);
     }
 
     let totalSeconds = ms / 1000;
@@ -62,7 +43,38 @@ export const timeFomattedDHMS = (ms: number): string => {
     totalSeconds %= 3600;
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = Math.round(totalSeconds % 60);
-    return `${days} д ${hours} ч ${minutes} м ${seconds} с`;
+
+    return {
+        days,
+        hours,
+        minutes,
+        seconds,
+        /**
+         * Возвращает форматированное время из полученных полей
+         * @returns д? ч? мин? сек? || меньше секунды
+         */
+        toString: () => {
+            if (ms < 1000) {
+                return 'меньше секунды';
+            }
+
+            const str = [];
+            if (days) {
+                str.push(`${days} д`);
+            }
+            if (hours) {
+                str.push(`${hours} ч`);
+            }
+            if (minutes) {
+                str.push(`${minutes} мин`);
+            }
+            if (seconds) {
+                str.push(`${seconds} сек`);
+            }
+
+            return str.join(' ');
+        },
+    };
 };
 
 //#endregion
